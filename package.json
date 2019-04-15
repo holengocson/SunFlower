@@ -1,0 +1,48 @@
+{
+  "name": "SunflowerProject",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@valdio/react-native-scrollable-tabview": "^0.8.11",
+    "install": "^0.12.2",
+    "npm": "^6.9.0",
+    "react": "16.8.3",
+    "react-native": "0.59.3",
+    "react-native-action-button": "^2.8.5",
+    "react-native-calendars": "^1.32.0",
+    "react-native-cardview": "^2.0.2",
+    "react-native-datepicker-modal": "^1.1.0",
+    "react-native-elements": "^1.1.0",
+    "react-native-firebase": "^5.2.5",
+    "react-native-gesture-handler": "^1.1.0",
+    "react-native-material-dropdown": "^0.11.1",
+    "react-native-modal-datetime-picker": "^6.1.0",
+    "react-native-pure-chart": "0.0.24",
+    "react-native-reanimated": "^1.0.0",
+    "react-native-svg": "^9.3.7",
+    "react-native-svg-charts": "^5.2.0",
+    "react-native-tab-view": "^2.1.0",
+    "react-native-vector-icons": "^6.4.2",
+    "react-navigation": "^3.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/runtime": "^7.4.3",
+    "babel-jest": "^24.7.1",
+    "jest": "^24.7.1",
+    "metro-react-native-babel-preset": "^0.53.1",
+    "react-test-renderer": "16.8.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  }
+}
