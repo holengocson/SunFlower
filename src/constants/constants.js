@@ -3,3 +3,7 @@ export const OtherString = 'Welcome to the app';
 export const home_recent_transaction = "Recent Transactions"
 export const home_dong = "đ"
 export const home_expense_and_income = "Expense Vs Income"
+export const appInfo_3 = "Immediately grasp the financial situation: Revenue, Cost, Profit, Debt ... via Mobile"
+export const appInfo_4 = "Quick deployment: Just 5 minutes of installation is available immediately"
+export const appInfo_1 = "MEDIUM AND SMALL BUSINESS ACCOUNTING SOFTWARE"
+export const appInfo_2 = "FULLY - FASTLY - ACCURATELY"

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ListView, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ListView, ScrollView, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { Divider } from 'react-native-elements';
 import firebase from 'react-native-firebase'
 import PureChart from 'react-native-pure-chart';
 import { home_dong } from '../../constants/constants';
 import CardView from 'react-native-cardview'
+
+
 
 let sampleData
 let amountSumInMonth
@@ -43,7 +45,7 @@ class MonthChart extends React.Component {
     _isMounted = false;
     constructor() {
         super(),
-        this._goToMain = this._goToMain.bind(this)
+            this._goToMain = this._goToMain.bind(this)
         this.getData = this.getData.bind(this)
         this.state = {
             amountSumExpense: 0,
@@ -77,7 +79,6 @@ class MonthChart extends React.Component {
             expenseDecember: 0,
             dataSource: ds.cloneWithRows(['row 1', 'row 2']),
 
-
         }
     }
 
@@ -89,7 +90,10 @@ class MonthChart extends React.Component {
 
     componentDidMount() {
         this._isMounted = true;
-        var docRef = firebase.firestore().collection("User").doc("f3qytY21q3MH31obOJEP");
+
+        const { currentUser } = firebase.auth()
+
+        var docRef = firebase.firestore().collection("User").doc(currentUser.uid);
         docRef.get()
 
             .then((responseJSON) => {
@@ -318,12 +322,7 @@ class MonthChart extends React.Component {
         const { amountInJanury, amountInFebruary, amountSumInMonth, amountInApril, amountInMay, amountInJune, amountInJuly, amountInAugust, amountInSeptember, amountInOctober, amountInNovember, amountInDecember } = this.state
         const { expenseJanuary, expenseFebruary, expenseMarch, expenseApril, expenseMay, expenseJune, expenseJuly,
             expenseAugust, expenseSeptember, expenseOctober, expenseNovember, expenseDecember } = this.state
-        // dataByMonth = [
-        //     {month: 1, data: expenseJanuary},
-        //     {month: 2, data: expenseFebruary},
-        //     {month: 3, data: expenseMarch},
-        //     {month: 4, data: expenseApril}
-        // ]
+      
         sampleData = [
 
             {
@@ -343,7 +342,7 @@ class MonthChart extends React.Component {
                     { x: '11', y: amountInNovember },
                     { x: '12', y: amountInDecember },
                 ],
-                color: '#33B54B'
+                color: '#FFCB66'
             },
             {
                 seriesName: 'expense',
@@ -362,34 +361,35 @@ class MonthChart extends React.Component {
                     { x: '11', y: expenseNovember },
                     { x: '12', y: expenseDecember },
                 ],
-                color: '#F05164'
+                color: '#F64444'
             }
 
 
         ]
+
         return (
 
             <View style={styles.container}>
 
-                <ScrollView>
-                    <CardView
-                        style={styles.cardview}
-                        cardElevation={10}
+                <ScrollView >
 
-                        cornerRadius={5}>
+                    <Text style = {{padding: 10,  paddingTop: 15, color: 'white', fontFamily: 'Roboto-Bold', fontSize: 26}}>Charts</Text>
+            
+                    <View style = {{margin: 10}} >
                         <PureChart
+                            backgroundColor='#32404C'
+
                             width={'100%'}
                             height={200}
+                            color='red'
                             data={sampleData} type='bar' />
-                    </CardView>
 
+                    </View>
 
-                    <CardView
-                        style={styles.cardview}
-                        cardElevation={10}
+                    <Text style = {{padding: 10,  paddingTop: 15, color: 'white', fontFamily: 'Roboto-Bold', fontSize: 26}}>Transactions</Text>
 
-                        cornerRadius={5}>
-                        <ListView
+                    <ListView  
+                            style = {{marginHorizontal: 5}}
                             enableEmptySections={true}
                             noScroll={true}
                             dataSource={this.state.dataSource}
@@ -398,23 +398,24 @@ class MonthChart extends React.Component {
 
 
                                 <View
-                                    style={{
-                                        flex: 1, flexDirection: 'row', margin: 8, borderBottomWidth: 0.5,
-                                        borderColor: '#c9c9c9',
-                                    }}>
+                                    style={styles.appInfoItem}>
 
                                     <Text style={{
                                         flex: 1,
                                         flexDirection: 'column',
                                         marginLeft: 12,
                                         justifyContent: 'center',
+                                        color: 'white', 
+                                        fontSize: 18,
+                                        fontFamily: 'Roboto-Medium'
                                     }}>{rowData.month}</Text>
                                     <View style={{
                                         flex: 1,
                                         flexDirection: 'column',
                                         marginLeft: 12,
                                         justifyContent: 'center',
-                                        alignItems: 'flex-end'
+                                        alignItems: 'flex-end',
+                                        marginEnd: 12
                                     }}>
                                         <Text style={styles.textIncome}>{rowData.dataIncome + home_dong}</Text>
                                         <Text style={styles.textExpense}>{rowData.dataExpense + home_dong}</Text>
@@ -431,13 +432,11 @@ class MonthChart extends React.Component {
 
                             }
                         />
-                    </CardView>
                 </ScrollView>
 
 
-
             </View>
-        );
+        )
     }
 }
 
@@ -447,8 +446,8 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-
-        marginTop: 50
+        backgroundColor: '#222F38',
+        paddingTop: 10
 
     },
     textTitle: {
@@ -462,9 +461,9 @@ const styles = StyleSheet.create({
     },
     cardview: {
         flex: 1,
-        backgroundColor: 'white',
-        margin: 5,
-        padding: 5,
+        backgroundColor: '#33414B'
+
+
     },
     actionButtonIcon: {
         fontSize: 20,
@@ -481,13 +480,15 @@ const styles = StyleSheet.create({
     textIncome: {
         fontSize: 20,
         color: '#33B54B',
+        fontFamily: 'Roboto-Medium'
 
     },
 
     textExpense: {
         fontSize: 20,
         color: '#F05164',
-        marginTop: 5
+        marginTop: 5,
+        fontFamily: 'Roboto-Medium'
 
     },
     textAccu: {
@@ -503,6 +504,26 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5,
     },
+
+    appInfoItem: {
+        flex: 1, flexDirection: 'row', margin: 8,  borderBottomWidth: 0.5, backgroundColor: '#32404C',
+                                        borderColor: '#c9c9c9',
+        
+       
+
+        padding: 7,
+        marginHorizontal: 5,
+        shadowOffset: {
+            width: 0,
+            height: 8
+        },
+        shadowRadius: 6,
+        
+        shadowOpacity: 0.5,
+        borderRadius: 6
+    }
+
 })
+
 
 export default MonthChart;

@@ -25,7 +25,7 @@ const SettingsTabs = createBottomTabNavigator({
     InfoScreen: {
         screen: InfoScreen,
         navigationOptions: {
-            tabBarLabel: "Budget",
+            tabBarLabel: "Settings",
             tabBarIcon: ({ tintColor }) => (
                 <Icon
                     name="memory"
@@ -37,4 +37,4 @@ const SettingsTabs = createBottomTabNavigator({
 });
 
 //Issue: the tab navigator needs to be wrapped inside a stack navigator
-export default createStackNavigator({ SettingsTabs }, { headerMode: "none" });
+export default  SettingsTabs ;

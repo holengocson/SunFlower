@@ -9,6 +9,8 @@ import SignIn from './src/SignIn/SignIn'
 import Loading from './src/Loading/Loading'
 import Main from './src/Home/index'
 import financedetail from './src/Home/details/index'
+import ForgotPasswordScreen from './src/forgot/forgotpass'
+import Home from './src/Home/HomeScreen/home'
 
 const AppStack = createStackNavigator({ Home: SignUp, Other: Loading });
 // const SignIN = createStackNavigator({ SignIn: SignIn });
@@ -25,10 +27,13 @@ export default createAppContainer(createSwitchNavigator(
     Loading: Loading,
     Main: Main,
     SignIn: SignIn,
-    financedetail: financedetail
+    financedetail: financedetail,
+    SignUp: SignUp,
+    ForgotPasswordScreen: ForgotPasswordScreen,
+    Home: Home
   },
   {
-    initialRouteName: 'financedetail'
+    initialRouteName: 'Loading'
   }
   ));
 

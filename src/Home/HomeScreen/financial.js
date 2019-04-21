@@ -8,13 +8,13 @@ var income = 0
 var expense = 0
 
 class Financial extends Component {
-
+    _isMounted = false;
     constructor() {
         super()
         this.state = {
             incomeMount: 0,
             expenseMount: 0,
-            amountSumExpense : 0,
+            amountSumExpense: 0,
             amoutSumIncome: 0
         }
     }
@@ -54,10 +54,16 @@ class Financial extends Component {
     //         });
     // }
 
-    
-    componentDidMount() {
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
-        var docRef = firebase.firestore().collection("User").doc("f3qytY21q3MH31obOJEP");
+
+    componentDidMount() {
+        this._isMounted = true;
+
+        const { currentUser } = firebase.auth()
+        var docRef = firebase.firestore().collection("User").doc(currentUser.uid);
         docRef.get()
 
             .then((responseJSON) => {
@@ -78,33 +84,53 @@ class Financial extends Component {
 
                 // }
 
-                this.setState({
-                    // incomeMount: income,
-                    // expenseMount: expense,
-                    amountSumExpense: responseJSON.data().previousAmountExpense,
-                    amoutSumIncome: responseJSON.data().previousAmountIncome
-                })
+               
+
+                expenseMount = responseJSON.data().previousAmountExpense,
+                incomeMount =  responseJSON.data().previousAmountIncome
+
+                if (this._isMounted) {
+                    if (responseJSON.data().previousAmountExpense == null) {
+                        expenseMount = 0
+                    }
+    
+                    if (responseJSON.data().previousAmountIncome == null) {
+                        incomeMount = 0
+                    }
+                    this.setState({
+                        // incomeMount: income,
+                        // expenseMount: expense,
+
+                        
+
+                        amountSumExpense: expenseMount,
+                        amoutSumIncome: incomeMount
+                    })
+                }
+
+
+
             }
             )
             .catch((error) => {
                 console.error(error);
             });
-        
+
     }
 
     render() {
         const { incomeMount } = this.state
-        const { expenseMount, amountSum,amoutSumIncome,amountSumExpense } = this.state
+        const { expenseMount, amountSum, amoutSumIncome, amountSumExpense } = this.state
 
         var finance = amoutSumIncome - amountSumExpense
 
-        if (finance == 0 | finance == null){
+        if (finance == 0 | amoutSumIncome == null || amountSumExpense == null) {
             finance = 0
-        }else {
+        } else {
             finance = amoutSumIncome - amountSumExpense
         }
 
-        return <View style={styles.container}>
+        return <View >
 
             <Text style={styles.textContent}>{finance + ' ' + home_dong}</Text>
         </View>
@@ -116,17 +142,20 @@ class Financial extends Component {
 const styles = StyleSheet.create({
 
     container: {
-        flex: 1,
+
         justifyContent: 'center',
         alignItems: 'center',
+
+
     },
 
     textContent: {
-
-        color: '#F05164',
+        marginStart: 15,
+        color: 'white',
         fontSize: 25,
-
-        margin: 30,
+        fontFamily: 'Roboto-Bold',
+        letterSpacing: 5,
+        marginBottom: 15
 
     }
 })

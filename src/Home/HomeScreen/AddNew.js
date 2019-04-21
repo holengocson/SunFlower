@@ -21,7 +21,7 @@ const MyStatusBar = ({ backgroundColor, ...props }) => (
 );
 
 class AddNew extends Component {
-
+    _isMounted = false;
     static navigationOptions = ({ navigation }) => ({
         headerStyle: {
             backgroundColor: '#05ADEE',
@@ -57,7 +57,7 @@ class AddNew extends Component {
             isDateTimePickerVisible: false,
             isTimePickerVisible: false,
             day: new Date().getDate().toString(),
-            month: new Date().getMonth().toString(),
+            month: (new Date().getMonth() + 1).toString(),
             year: new Date().getFullYear().toString(),
 
             hour: new Date().getHours().toString(),
@@ -130,8 +130,14 @@ class AddNew extends Component {
 
     })
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     componentDidMount(){
-        var docRef = firebase.firestore().collection("User").doc("f3qytY21q3MH31obOJEP");
+        this._isMounted = true;
+        const { currentUser } = firebase.auth()
+        var docRef = firebase.firestore().collection("User").doc(currentUser.uid);
         docRef.get()
 
             .then((responseJSON) => {
@@ -151,13 +157,16 @@ class AddNew extends Component {
 
 
                 }
+                if (this._isMounted) {
+                    this.setState({
+                        previousAmountIncome: income ,
+                        previousAmountExpense: expense,
+                        
+                    })
+                }
 
 
-                this.setState({
-                    previousAmountIncome: income ,
-                    previousAmountExpense: expense,
-                    
-                })
+               
             }
             )
             .catch((error) => {
@@ -167,66 +176,69 @@ class AddNew extends Component {
     
 
     actionDone() {
-        const { reason,day, month, year, hours, minutes, amount, description } = this.state
+        const { reason,day, month, year, hours, minutes, amount, description,previousAmountExpense, previousAmountIncome } = this.state
        
         const {goBack} = this.props.navigation;
         const { goal } = this.state
         // Alert.alert(this.state.goal)
 
-        var previousAmountIncome = this.state.previousAmountIncome
-        var previousAmountExpense = this.state.previousAmountExpense
+        const {currentUser} = firebase.auth()
 
-
-
-        if (this.state.goal == 'Expense') {
-            firebase.firestore().collection("User")
-                .doc('f3qytY21q3MH31obOJEP')
-                .update(
-                    {   
-                        previousAmountExpense: previousAmountExpense + amount,
-                     
-                        expense: firebase.firestore.FieldValue.arrayUnion(
-                            {   
+        if( reason.trim() === '' ||   description.trim() === '' ||  amount == 0 || goal.trim() === ''){
+            Alert.alert('Please DO NOT empty any fields')
+        }else {
+            if (this.state.goal == 'Expense') {
+                firebase.firestore().collection("User")
+                    .doc(currentUser.uid)
+                    .update(
+                        {   
+                            previousAmountExpense: previousAmountExpense + amount,
+                         
+                            expense: firebase.firestore.FieldValue.arrayUnion(
+                                {   
+                                    
+                                    amount: amount,
+                                    reason: reason,
+                                    description: description,
+                                    day: day,
+                                    month : month,
+                                    year: year, 
+                                    hour: hours,
+                                    minute: minutes
                                 
-                                amount: amount,
-                                reason: reason,
-                                description: description,
-                                day: day,
-                                month : month,
-                                year: year, 
-                                hour: hours,
-                                minute: minutes
-                            
-                            }
-                        )
-                    }
-                ).then(() => this.props.navigation.navigate('financedetail'))
-                .catch(error => Alert.alert(error))
-                
-
-        } else {
-            firebase.firestore().collection("User")
-                .doc('f3qytY21q3MH31obOJEP')
-                .update(
-                    {
-                        previousAmountIncome: previousAmountIncome + amount,
-                        income: firebase.firestore.FieldValue.arrayUnion(
-                            {
-                                amount: amount,
-                                reason: reason,
-                                description: description,
-                                day: day,
-                                month : month,
-                                year: year, 
-                                hour: hours,
-                                minute: minutes
-                            }
-                        )
-                    }
-                ).then(() => this.props.navigation.navigate('financedetail'))
-                .catch(error => Alert.alert(error))
-
+                                }
+                            )
+                        }
+                    ).then(() => this.props.navigation.navigate('financedetail'))
+                    .catch(error => Alert.alert(error))
+                    
+    
+            } else {
+                firebase.firestore().collection("User")
+                    .doc(currentUser.uid)
+                    .update(
+                        {
+                            previousAmountIncome: previousAmountIncome + amount,
+                            income: firebase.firestore.FieldValue.arrayUnion(
+                                {
+                                    amount: amount,
+                                    reason: reason,
+                                    description: description,
+                                    day: day,
+                                    month : month,
+                                    year: year, 
+                                    hour: hours,
+                                    minute: minutes
+                                }
+                            )
+                        }
+                    ).then(() => this.props.navigation.navigate('financedetail'))
+                    .catch(error => Alert.alert(error))
+    
+            }
         }
+
+        
       
     }
 

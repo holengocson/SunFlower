@@ -3,12 +3,8 @@ import { Text, View, TouchableOpacity, StyleSheet, Alert, ListView, ActivityIndi
 import firebase from 'react-native-firebase'
 
 import PureChart from 'react-native-pure-chart';
-import { ifStatement } from '@babel/types';
 
-// let sampleData = [
-//     { seriesName: 'series1', data: [30], color: 'green' },
-//     { seriesName: 'series1', data: [100], color: 'red' }
-// ]
+
 
 let sampleData
 
@@ -16,7 +12,7 @@ var income = 0
 var expense = 0
 
 class Charts extends React.Component {
-
+    _isMounted = false;
 
     constructor(props) {
         super(props)
@@ -24,42 +20,49 @@ class Charts extends React.Component {
             incomeMount: 0,
             expenseMount: 0,
             items: '',
-            amountSumExpense: 0,
-            amoutSumIncome: 0,
-            
+            previousAmountIncome: 0,
+            previousAmountExpense: 0
+
         }
     }
 
-    componentDidMount() {
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
-        var docRef = firebase.firestore().collection("User").doc("f3qytY21q3MH31obOJEP");
+    componentDidMount() {
+        this._isMounted = true;
+        const { currentUser } = firebase.auth()
+        var docRef = firebase.firestore().collection("User").doc(currentUser.uid);
         docRef.get()
 
             .then((responseJSON) => {
 
-                for (let index = 0; index < responseJSON.data().income.length; index++) {
-                    if (responseJSON.data().income[index].amount != null) {
-                        income += responseJSON.data().income[index].amount;
+
+
+                income = responseJSON.data().previousAmountIncome
+                expense = responseJSON.data().previousAmountExpense
+
+
+
+                if (this._isMounted) {
+
+                    if (responseJSON.data().previousAmountIncome == null) {
+                        income = 0
                     }
 
-
-                }
-
-                for (let index = 0; index < responseJSON.data().expense.length; index++) {
-                    if (responseJSON.data().expense[index].amount != null) {
-                        expense += responseJSON.data().expense[index].amount;
+                    if (responseJSON.data().previousAmountExpense == null) {
+                        expense = 0
                     }
 
+                    this.setState({
+                        incomeMount: income,
+                        expenseMount: expense,
 
+                    })
                 }
 
-                this.setState({
-                    incomeMount: income,
-                    expenseMount: expense,
-                    // amountSumExpense: responseJSON.data().previousAmountExpense,
-                    // amoutSumIncome: responseJSON.data().previousAmountIncome,
-                    // changeState: true
-                })
+
             }
             )
             .catch((error) => {
@@ -70,27 +73,31 @@ class Charts extends React.Component {
     render() {
 
         const { incomeMount } = this.state
-        const { expenseMount, amoutSumIncome, amountSumExpense } = this.state
+        const { expenseMount } = this.state
         const { items } = this.state
 
         const { currentUser } = this.state
+
+        
+
         sampleData = [
             { seriesName: 'series1', data: [incomeMount], color: '#33B54B' },
             { seriesName: 'series1', data: [expenseMount], color: '#F05164' }
         ]
         return (
 
-
             <View
-                style={{ marginTop: 20, flexDirection: 'row' }}>
+                style={{ marginTop: 20, flexDirection: 'row', backgroundColor: '#F5F6F8', }}>
 
 
                 <View style={styles.flexContainer}>
                     <PureChart
-
+                        backgroundColor = '#F5F6F8'
                         width={'%100'}
                         height={150}
                         data={sampleData} type='bar' />
+
+               
                 </View>
 
                 <View style={{
@@ -127,7 +134,7 @@ class Charts extends React.Component {
                         <View style={styles.circle}>
                         </View>
 
-                        <Text style={styles.itemTitle}>DDDADAD</Text>
+                        <Text style={styles.itemTitle}>Accumate</Text>
 
                         <Text style={styles.itemRight}>{incomeMount - expenseMount}</Text>
                     </View>
@@ -154,7 +161,7 @@ export default Charts
 const styles = StyleSheet.create({
     flexContainer: {
         flex: 2,
-        backgroundColor: 'gray'
+        backgroundColor: '#F5F6F8',
     },
     circle: {
         width: 15,
@@ -182,13 +189,26 @@ const styles = StyleSheet.create({
     },
     itemTitle: {
         flex: 1,
-
+        fontFamily: 'Roboto-Medium',
+        color: 'gray',
         fontSize: 20
     },
     itemRight: {
         flex: 1,
         textAlign: 'right',
-        fontSize: 20
-    }
+        fontSize: 21,
+        fontFamily: 'Roboto-Bold',
+        letterSpacing: 2,
+        color: 'gray'
+    },
+    textContent: {
+
+        fontSize: 18,
+        letterSpacing: 3,
+        color: 'white',
+        fontFamily: 'Roboto-Medium',
+        margin: 10,
+        padding: 5
+    },
 
 })

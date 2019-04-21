@@ -40,7 +40,10 @@ class Current extends React.Component {
 
 
     componentDidMount() {
-        var docRef = firebase.firestore().collection("User").doc("f3qytY21q3MH31obOJEP");
+
+        const {currentUser} = firebase.auth()
+
+        var docRef = firebase.firestore().collection("User").doc(currentUser.uid);
         docRef.get()
 
             .then((responseJSON) => {
