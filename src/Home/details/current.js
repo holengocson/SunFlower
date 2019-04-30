@@ -136,17 +136,17 @@ class Current extends React.Component {
 
 
 
-                                <View
-                                    style={{
-                                        flex: 1, flexDirection: 'row', margin: 8, borderBottomWidth: 0.5,
-                                        borderColor: '#c9c9c9',
-                                    }}>
+                                <View 
+                                    style={styles.appInfoItem}>
 
                                     <Text style={{
                                         flex: 1,
                                         flexDirection: 'column',
                                         marginLeft: 12,
                                         justifyContent: 'center',
+                                        fontSize: 22,
+                                        fontFamily: 'Roboto-Medium',
+                                        color: 'white'
                                     }}>{rowData.month}</Text>
                                     <View style={{
                                         flex: 1,
@@ -212,29 +212,47 @@ const styles = StyleSheet.create({
     },
 
     textIncome: {
-        fontSize: 20,
-        color: '#33B54B',
-
+        fontSize: 22,
+        color: '#FD5A9F',
+        fontFamily: 'Roboto-Medium'
     },
 
     textExpense: {
-        fontSize: 20,
-        color: '#F05164',
-        marginTop: 5
+        fontSize: 22,
+        color: '#00E2DC',
+        marginTop: 5,
+        fontFamily: 'Roboto-Medium'
 
     },
     textAccu: {
 
-        fontSize: 20,
-        color: 'black',
+        fontSize: 22,
+        color: 'white',
         marginTop: 5,
-        marginBottom: 5
+        fontFamily: 'Roboto-Medium'
     },
     cardview: {
 
         backgroundColor: 'white',
         margin: 5,
         padding: 5,
+    },
+    appInfoItem: {
+        flex: 1, flexDirection: 'row', margin: 15, borderBottomWidth: 0.5, backgroundColor: '#32404C',
+        borderColor: '#c9c9c9',
+
+
+
+        padding: 7,
+        
+        shadowOffset: {
+            width: 0,
+            height: 8
+        },
+        shadowRadius: 6,
+
+        shadowOpacity: 0.5,
+        borderRadius: 6
     },
 })
 

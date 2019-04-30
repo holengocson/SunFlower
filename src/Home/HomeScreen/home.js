@@ -246,7 +246,7 @@ class Home extends Component {
                     </CardView>
 
 
-                    <CardView
+                    {/* <CardView
                         style={styles.cardviewSignOut}
                         cardElevation={10}
 
@@ -257,7 +257,7 @@ class Home extends Component {
                             Sign Out
                         </Text>
 
-                    </CardView>
+                    </CardView> */}
 
 
                     <ActionButton

@@ -46,6 +46,7 @@ class AddNew extends Component {
         this.onChangeText = this.onChangeText.bind(this)
         this.onChangeTextAmount = this.onChangeTextAmount.bind(this)
         this.onChangeTextDescription = this.onChangeTextDescription.bind(this)
+        this.handleBackPress = this.handleBackPress.bind(this)
 
         this.state = ({
             previousAmountExpense: 0,
@@ -129,13 +130,19 @@ class AddNew extends Component {
         // ),
 
     })
+    handleBackPress() {
+        this.props.navigation.navigate('Home') // works best when the goBack is async
+        
+      }
 
     componentWillUnmount() {
         this._isMounted = false;
+        
     }
 
     componentDidMount(){
         this._isMounted = true;
+       
         const { currentUser } = firebase.auth()
         var docRef = firebase.firestore().collection("User").doc(currentUser.uid);
         docRef.get()
@@ -265,14 +272,29 @@ class AddNew extends Component {
     render() {
         let data = [
             {
-            value: 'Banana',
+            value: 'Food and Dining',
         }, {
-            value: 'Mango',
+            value: 'Auto & Transport',
         }, {
-            value: 'Pear',
+            value: 'Clothing',
         },
         {
-            value: 'Restaurant',
+            value: 'Entertainment',
+        },
+        {
+            value: 'Health & Fitness',
+        },
+        {
+            value: 'Home',
+        },
+        {
+            value: 'Kids',
+        },
+        {
+            value: 'Personal',
+        },
+        {
+            value: 'Pets',
         },
     ];
 
@@ -294,7 +316,7 @@ class AddNew extends Component {
         }
 
         return (
-            <View >
+            <View style = {{marginTop: 40}}>
                 <MyStatusBar backgroundColor="#5E8D48" barStyle="light-content" />
 
 
@@ -427,6 +449,18 @@ class AddNew extends Component {
                     </View>
                 </TouchableHighlight>
 
+                <TouchableHighlight
+                    style={styles.submit}
+                    onPress={this.handleBackPress}
+
+                    underlayColor='#abdaec'>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        {/* <Icon name="back" size={20} color='white' style={{ margin: 5 }} /> */}
+                        <Text style={styles.submitText}>Back</Text>
+                    </View>
+                </TouchableHighlight>
+
+                
 
 
 
@@ -451,6 +485,7 @@ const styles = StyleSheet.create({
     textContent: {
 
         fontSize: 25,
+        fontFamily: 'Roboto-Medium'
 
     },
     cardview: {
@@ -468,13 +503,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#05ADEE",
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: '#fff'
+        borderColor: '#fff',
+        
     },
     submitText: {
         color: '#fff',
         textAlign: 'center',
         fontSize: 17,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontFamily: 'Roboto-Regular'
     },
 
 

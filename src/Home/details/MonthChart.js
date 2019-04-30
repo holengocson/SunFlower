@@ -478,25 +478,24 @@ const styles = StyleSheet.create({
     },
 
     textIncome: {
-        fontSize: 20,
-        color: '#33B54B',
+        fontSize: 22,
+        color: '#FD5A9F',
         fontFamily: 'Roboto-Medium'
-
     },
 
     textExpense: {
-        fontSize: 20,
-        color: '#F05164',
+        fontSize: 22,
+        color: '#00E2DC',
         marginTop: 5,
         fontFamily: 'Roboto-Medium'
 
     },
     textAccu: {
 
-        fontSize: 20,
-        color: 'black',
+        fontSize: 22,
+        color: 'white',
         marginTop: 5,
-        marginBottom: 5
+        fontFamily: 'Roboto-Medium'
     },
     cardview: {
 

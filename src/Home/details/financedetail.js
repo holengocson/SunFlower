@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import firebase from 'react-native-firebase'
@@ -43,15 +43,15 @@ class financedetail extends React.Component {
 
     componentDidMount() {
         this._isMounted = true;
-        const {currentUser} = firebase.auth()
+        const { currentUser } = firebase.auth()
         var docRef = firebase.firestore().collection("User").doc(currentUser.uid);
         docRef.get()
 
             .then((responseJSON) => {
-                
+
                 if (this._isMounted) {
                     this.setState({
-                         name: responseJSON.data().displayName
+                        name: responseJSON.data().displayName
 
                     })
                 }
@@ -68,22 +68,33 @@ class financedetail extends React.Component {
         const { expenseMount, amoutSumIncome, amountSumExpense } = this.state
         return (
 
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#222F38' }}>
+            <View style={{ flex: 1, backgroundColor: '#222F38' }}>
                 <MyStatusBar backgroundColor="#5E8D48" barStyle="light-content" />
 
                 {/* <Text
 
                 >{amountSumExpense}</Text> */}
-                <Icon
-                    onPress={this._goToMain}
-                    name="memory" size={48} />
+
+                <View style={{ flexDirection: 'row', marginTop: 50, alignItems: 'center' }}>
+                    <TouchableOpacity
+                    style = {{marginStart: 20}}
+                        onPress = {this._goToMain}>
+                        <Image
+
+                            source={require('./home.png')}
+                            style={{ width: 37, height: 37 }}></Image>
+                    </TouchableOpacity>
+
+                    <View style={styles.settingsTitle}>
 
 
-                <View style={styles.settingsTitle}>
-
-
-                    <Text style={{ fontSize: 28, fontFamily: 'Roboto-Medium', color: 'white' }}>Hello, {this.state.name}</Text>
+                        <Text style={{ fontSize: 28, fontFamily: 'Roboto-Medium', color: 'white' }}>Hello, {this.state.name}</Text>
+                    </View>
                 </View>
+
+
+
+
 
                 <ScrollableTabView
                     renderTabBar={() => <ScrollableTabBar />}
@@ -140,6 +151,7 @@ const styles = StyleSheet.create({
     },
     settingsTitle: {
         flexDirection: 'column',
+        marginStart: 30,
         marginTop: 25,
         marginBottom: 20
     },
