@@ -15,12 +15,12 @@ let incomeInMonth = 0
 let expenseInYear = 0
 let incomeInYear = 0
 
-let expenseInDay = 0
+var expenseInDay = 0
 let incomeInDay = 0
 
 
 class Current extends React.Component {
-
+    _isMounted = false;
     constructor(){
         super()
         this.getData = this.getData.bind(this)
@@ -31,16 +31,34 @@ class Current extends React.Component {
             amountExpenseInYear: 0,
             amountIncomeInYear: 0,
 
-            amountExpenseInDay: 0,
+            amountExpenseInDay :0,
             amountIncomeInDay: 0,
+
+          
+
+ 
 
             dataSource: ds.cloneWithRows(['row 1', 'row 2']),
         }
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+         expenseInMonth = 0
+ incomeInMonth = 0
+
+ expenseInYear = 0
+ incomeInYear = 0
+
+ expenseInDay = 0
+ incomeInDay = 0
+    }
 
     componentDidMount() {
 
+       
+
+        this._isMounted = true;
         const {currentUser} = firebase.auth()
 
         var docRef = firebase.firestore().collection("User").doc(currentUser.uid);
@@ -48,58 +66,61 @@ class Current extends React.Component {
 
             .then((responseJSON) => {
 
-                for (let index = 0; index < responseJSON.data().expense.length; index++) {
-                    if (parseInt(responseJSON.data().expense[index].month) == new Date().getMonth()) {
-                        expenseInMonth += responseJSON.data().expense[index].amount;
+                if(this._isMounted){
+                    for (let index = 0; index < responseJSON.data().expense.length; index++) {
+                        if (parseInt(responseJSON.data().expense[index].month) == 5) {
+                            expenseInMonth += responseJSON.data().expense[index].amount;
+                        }
                     }
-                }
-                for (let index = 0; index < responseJSON.data().income.length; index++) {
-                    if (parseInt(responseJSON.data().income[index].month) == new Date().getMonth()) {
-                        incomeInMonth += responseJSON.data().income[index].amount;
+                    for (let index = 0; index < responseJSON.data().income.length; index++) {
+                        if (parseInt(responseJSON.data().income[index].month) ==5) {
+                            incomeInMonth += responseJSON.data().income[index].amount;
+                        }
                     }
-                }
-
-
-
-                for (let index = 0; index < responseJSON.data().expense.length; index++) {
-                    if (parseInt(responseJSON.data().expense[index].year) == new Date().getFullYear()) {
-                        expenseInYear += responseJSON.data().expense[index].amount;
+    
+    
+    
+                    for (let index = 0; index < responseJSON.data().expense.length; index++) {
+                        if (parseInt(responseJSON.data().expense[index].year) == new Date().getFullYear()) {
+                            expenseInYear += responseJSON.data().expense[index].amount;
+                        }
                     }
-                }
-                for (let index = 0; index < responseJSON.data().income.length; index++) {
-                    if (parseInt(responseJSON.data().income[index].year) == new Date().getFullYear()) {
-                        incomeInYear += responseJSON.data().income[index].amount;
+                    for (let index = 0; index < responseJSON.data().income.length; index++) {
+                        if (parseInt(responseJSON.data().income[index].year) == new Date().getFullYear()) {
+                            incomeInYear += responseJSON.data().income[index].amount;
+                        }
                     }
-                }
-
-
-
-                for (let index = 0; index < responseJSON.data().expense.length; index++) {
-                    if (parseInt(responseJSON.data().expense[index].day) == new Date().getDate()) {
-                        expenseInDay += responseJSON.data().expense[index].amount;
+    
+    
+    
+                    for (let index = 0; index < responseJSON.data().expense.length; index++) {
+                        if (parseInt(responseJSON.data().expense[index].day) == new Date().getDate()) {
+                            expenseInDay += responseJSON.data().expense[index].amount;
+                        }
                     }
-                }
-                for (let index = 0; index < responseJSON.data().income.length; index++) {
-                    if (parseInt(responseJSON.data().income[index].day) == new Date().getDate()) {
-                        incomeInDay += responseJSON.data().income[index].amount;
+                    for (let index = 0; index < responseJSON.data().income.length; index++) {
+                        if (parseInt(responseJSON.data().income[index].day) == new Date().getDate()) {
+                            incomeInDay += responseJSON.data().income[index].amount;
+                        }
                     }
+                    
+                   
+                    
+    
+                    this.setState({
+                        amountExpenseInMonth: expenseInMonth,
+                        amountIncomeInMonth: incomeInMonth,
+    
+                        amountExpenseInYear: expenseInYear,
+                        amountIncomeInYear: incomeInYear,
+    
+                        amountExpenseInDay: expenseInDay,
+                        amountIncomeInDay: incomeInDay,
+    
+    
+                        dataSource: ds.cloneWithRows(this.getData())
+                    })
                 }
-
-                
-
-                this.setState({
-                    amountExpenseInMonth: expenseInMonth,
-                    amountIncomeInMonth: incomeInMonth,
-
-                    amountExpenseInYear: expenseInYear,
-                    amountIncomeInYear: incomeInYear,
-
-                    amountExpenseInDay: expenseInDay,
-                    amountIncomeInDay: incomeInDay,
-
-
-                    dataSource: ds.cloneWithRows(this.getData())
-                })
             }
             )
             .catch((error) => {

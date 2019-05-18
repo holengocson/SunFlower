@@ -55,7 +55,9 @@ export default class SignUp extends React.Component {
             displayName: displayName,
             phoneNumber: phoneNumber,
             expense: [],
-            income: []
+            income: [],
+            previousAmountExpense: 0,
+            previousAmountIncome: 0
           })
           .then(() => this.props.navigation.navigate('Main'))
 

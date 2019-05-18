@@ -84,6 +84,31 @@ class MonthChart extends React.Component {
 
     componentWillUnmount() {
         this._isMounted = false;
+         income = 0
+ incomeJanuary = 0
+ incomeFebruary = 0
+ incomeApril = 0
+ incomeMay = 0
+ incomeJune = 0
+ incomeJuly = 0
+ incomeAugust = 0
+ incomeSeptember = 0
+ incomeOctober = 0
+ incomeNovember = 0
+ incomeDecember = 0
+
+ expenseJanuary = 0
+ expenseFebruary = 0
+ expenseMarch = 0
+ expenseApril = 0
+ expenseMay = 0
+ expenseJune = 0
+ expenseJuly = 0
+ expenseAugust = 0
+ expenseSeptember = 0
+ expenseOctober = 0
+ expenseNovember = 0
+ expenseDecember = 0
     }
 
     _goToMain = () => this.props.navigation.navigate('Main');

@@ -52,8 +52,8 @@
 		400D56DA225BB957002A11D5 /* libFirebaseFirestore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 400D56D9225BB957002A11D5 /* libFirebaseFirestore.a */; };
 		400D56DC225BB957002A11D5 /* libFirebaseInstanceID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 400D56DB225BB957002A11D5 /* libFirebaseInstanceID.a */; };
 		400D56DD225BB966002A11D5 /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA91DF850E9000B6D8A /* libcxxreact.a */; };
-		400D5727225BBFBF002A11D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 400D5726225BBFBF002A11D5 /* GoogleService-Info.plist */; };
 		4026ACF5226B22FF004F6A87 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4026ACC8226B22EF004F6A87 /* libART.a */; };
+		40F8CB9F228EE72D0064887C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40F8CB9E228EE72C0064887C /* GoogleService-Info.plist */; };
 		41241FE100634E808818FEE6 /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10F78B3565E841D18A9E5673 /* libRNVectorIcons-tvOS.a */; };
 		4406AD0007594436B182B7D8 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A47067EA03684BEEAF9B4179 /* FontAwesome5_Solid.ttf */; };
 		5253E428848A47F9AA281765 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B30954FE11A461B9BA6377D /* EvilIcons.ttf */; };
@@ -453,8 +453,8 @@
 		400D56D7225BB957002A11D5 /* libFirebaseDatabase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseDatabase.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		400D56D9225BB957002A11D5 /* libFirebaseFirestore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseFirestore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		400D56DB225BB957002A11D5 /* libFirebaseInstanceID.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFirebaseInstanceID.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		400D5726225BBFBF002A11D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4026ACC2226B22EF004F6A87 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
+		40F8CB9E228EE72C0064887C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		440CBE95160F43918665A65C /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		46BFDB4A7FAB42038FAC3419 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		4B9F7E16F3EA454EADE31403 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -646,8 +646,8 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				400D5726225BBFBF002A11D5 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				40F8CB9E228EE72C0064887C /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -1402,7 +1402,6 @@
 				9BCBDB2B874445FBA9683421 /* FontAwesome5_Regular.ttf in Resources */,
 				4406AD0007594436B182B7D8 /* FontAwesome5_Solid.ttf in Resources */,
 				C124858D200A49D2AF79410C /* Foundation.ttf in Resources */,
-				400D5727225BBFBF002A11D5 /* GoogleService-Info.plist in Resources */,
 				28DDDF24FE3243C48B8EBFE3 /* Ionicons.ttf in Resources */,
 				EF73F94A1652465898D16CD7 /* MaterialCommunityIcons.ttf in Resources */,
 				0B43633A00F3440F9FA4B7C1 /* MaterialIcons.ttf in Resources */,
@@ -1421,6 +1420,7 @@
 				CB6837ECA9BF46C2A8CD4A36 /* Roboto-Light.ttf in Resources */,
 				EA8D537C6FB94972A7C2409D /* Roboto-LightItalic.ttf in Resources */,
 				E56E1A54D01F416482DB8360 /* Roboto-Medium.ttf in Resources */,
+				40F8CB9F228EE72D0064887C /* GoogleService-Info.plist in Resources */,
 				978D5B7C438749C18EC4B94F /* Roboto-MediumItalic.ttf in Resources */,
 				35DC55AD7873449A99310269 /* Roboto-Regular.ttf in Resources */,
 				EC57A5DC8473426B9B0403DE /* Roboto-Thin.ttf in Resources */,

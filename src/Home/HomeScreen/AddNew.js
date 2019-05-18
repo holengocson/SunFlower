@@ -149,25 +149,25 @@ class AddNew extends Component {
 
             .then((responseJSON) => {
 
-                for (let index = 0; index < responseJSON.data().income.length; index++) {
-                    if (responseJSON.data().income[index].amount != null) {
-                        income += responseJSON.data().income[index].amount;
-                    }
+                // for (let index = 0; index < responseJSON.data().income.length; index++) {
+                //     if (responseJSON.data().income[index].amount != null) {
+                //         income += responseJSON.data().income[index].amount;
+                //     }
 
 
-                }
+                // }
 
-                for (let index = 0; index < responseJSON.data().expense.length; index++) {
-                    if (responseJSON.data().expense[index].amount != null) {
-                        expense += responseJSON.data().expense[index].amount;
-                    }
+                // for (let index = 0; index < responseJSON.data().expense.length; index++) {
+                //     if (responseJSON.data().expense[index].amount != null) {
+                //         expense += responseJSON.data().expense[index].amount;
+                //     }
 
 
-                }
+                // }
                 if (this._isMounted) {
                     this.setState({
-                        previousAmountIncome: income ,
-                        previousAmountExpense: expense,
+                        previousAmountIncome: responseJSON.data().previousAmountIncome ,
+                        previousAmountExpense: responseJSON.data().previousAmountExpense,
                         
                     })
                 }
@@ -239,7 +239,15 @@ class AddNew extends Component {
                                 }
                             )
                         }
-                    ).then(() => this.props.navigation.navigate('financedetail'))
+                    ).then(() => 
+                    
+                    setTimeout(() => {this.props.navigation.navigate('financedetail')}, 3000)
+                    
+                    
+                    
+                    
+                    
+                    )
                     .catch(error => Alert.alert(error))
     
             }
